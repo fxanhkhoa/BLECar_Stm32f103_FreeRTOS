@@ -13,10 +13,13 @@
 .\main.o: .\STM32F10xFWLib\inc\stm32f10x_systick.h
 .\main.o: .\STM32F10xFWLib\inc\stm32f10x_usart.h
 .\main.o: ..\..\Source\User\Library.h
+.\main.o: .\STM32F10xFWLib\inc\stm32f10x_tim.h
+.\main.o: ..\..\Source\User\Motor_Driver.h
+.\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\main.o: ..\..\Source\include\FreeRTOS.h
 .\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-.\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\main.o: ..\CORTEX_STM32F103_Keil\FreeRTOSConfig.h
 .\main.o: ..\..\Source\include\projdefs.h
 .\main.o: ..\..\Source\include\portable.h
@@ -29,6 +32,9 @@
 .\main.o: ..\Common\include\comtest.h
 .\main.o: ..\..\Source\User\usart_print.h
 .\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\main.o: ..\..\Source\include\semphr.h
+.\main.o: ..\..\Source\include\queue.h
+.\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
 .\main.o: .\STM32F10xFWLib\inc\lcd.h
 .\main.o: LCD_Message.h
 .\main.o: ..\Common\include\BlockQ.h

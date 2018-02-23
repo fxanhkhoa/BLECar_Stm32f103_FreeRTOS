@@ -6,6 +6,11 @@
 #include "stm32f10x_usart.h"
 #include "stm32f10x_nvic.h"
 #include "usart_print.h"
+#include "semphr.h"
+
+#include "stdint.h"
+#include "stdlib.h"
+#include "string.h"
 
 /* Demo app includes. */
 #include "lcd.h"
@@ -23,6 +28,12 @@
 char s[30];
 char pos = 0;
 char ok = 0;
+int x, y;
+motor_controller _motor;
+
+xSemaphoreHandle left_right_gotsignal;
+
+#define MAX_TICK 10
 
 #define mainECHO_TASK_PRIORITY				( tskIDLE_PRIORITY + 1 )
 
@@ -69,8 +80,8 @@ information. */
 extern void vApplicationStackOverflowHook(xTaskHandle *pxTask,signed portCHAR *pcTaskName);
 
 
-void
-vApplicationStackOverflowHook(xTaskHandle *pxTask,signed portCHAR *pcTaskName) {
+void vApplicationStackOverflowHook(xTaskHandle *pxTask,signed portCHAR *pcTaskName) 
+{
 	(void)pxTask;
 	(void)pcTaskName;
 	for(;;);
@@ -91,6 +102,10 @@ int main(void)
 	prvSetupHardware();
     // Configure GPIO for LED
     ledInit();
+	Motor_Init();
+	
+	vSemaphoreCreateBinary(left_right_gotsignal); 
+	//binary_sem = xSemaphoreCreateBinary(); // hoac khai bao = cách nay
 		//USART_Initial();
 		
 	//uart_txq = xQueueCreate(256, sizeof(char));	
@@ -99,7 +114,7 @@ int main(void)
     //xTaskCreate(vTaskLedRed, (const char*) "Red LED Blink",128, NULL, 1, NULL);
     //xTaskCreate(vTaskLedYellow, (const char*) "Yellow LED Blink",128, NULL, 1, NULL);
 		vAltStartComTestTasks( mainCOM_TEST_PRIORITY, mainCOM_TEST_BAUD_RATE, mainCOM_TEST_LED );
-    //xTaskCreate(vTaskLedGreen, (const char*) "Green LED Blink", 128, NULL, 1, NULL);
+    xTaskCreate(vTaskLedGreen, (const char*) "Green LED Blink", 128, NULL, 1, NULL);
 		xTaskCreate(vTaskDataRead, (const char*) "Data Read", 128, NULL, 1, NULL);
     // Start RTOS scheduler
     vTaskStartScheduler();
@@ -129,21 +144,37 @@ void vTaskLedGreen(void *p)
 {
     for (;;)
     {
-        //GPIOC->ODR ^= GPIO_Pin_13;
-			//USART_SendData(USART1,65);
-			//while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
-        vTaskDelay(100/portTICK_RATE_MS);
+			if (xSemaphoreTake(left_right_gotsignal, MAX_TICK))
+			{
+				Control(_motor.left, _motor.right);
+			}
     }
 }
 
 void vTaskDataRead(void *p)
 {
+	char temp[3];
 	while (1)
 	{
 		if (pos == 8)
 		{
 			U_Print_Char(USART1, s);
 			pos = 0;
+			
+			memcpy(temp, &s[0], 3); // lay 3 ki tu dau (copy tu memory nen phai lay dia chi)
+			//U_Print_Char(USART1, temp);
+			x = atoi(temp);
+			
+			strncpy(temp, s + 4, 3); // lay 3 ki tu sau khoang trang (copy gia tri nen lay thang mang chuoi)
+			//U_Print_Char(USART1, temp);
+			y = atoi(temp);
+			
+			//U_Print(USART1, x);
+			//U_Print(USART1, y);
+			
+			_motor = getLeftRight(x,y);
+			
+			xSemaphoreGive(left_right_gotsignal);
 		}
 	}
 }

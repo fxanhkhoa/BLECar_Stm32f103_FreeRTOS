@@ -11,7 +11,7 @@
 ".\stm32f10x_systick.o"
 ".\stm32f10x_tim.o"
 ".\partest.o"
-".\serial_1.o"
+".\serial.o"
 ".\timertest.o"
 ".\main.o"
 ".\spi_flash.o"
@@ -30,6 +30,7 @@
 ".\heap_2.o"
 ".\library.o"
 ".\usart_print.o"
+".\motor_driver.o"
 --library_type=microlib --strict --scatter ".\RTOSDemo.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

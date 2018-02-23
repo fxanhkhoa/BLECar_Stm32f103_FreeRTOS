@@ -589,6 +589,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\Source\User\usart_print.c</FilePath>
             </File>
+            <File>
+              <FileName>Motor_Driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Source\User\Motor_Driver.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

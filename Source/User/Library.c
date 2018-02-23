@@ -46,3 +46,80 @@ void USART_Initial()
 	USART_Init(USART1, &USART);
 	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 }
+
+void Motor_Init()
+{
+	Driver_RCC_Init();
+	Driver_GPIO_Init();
+	Driver_PWM_Init();
+}
+
+struct Motor getLeftRight(int x, int y)
+{
+	struct Motor temp;
+	int right,left;
+	if ((x==0) && (y==0))
+	{
+		right = 0;
+		left = 0;
+	}
+	else if ((x > 0) && (y < 0))
+	{
+		if ((abs(x) < abs(y)))
+		{
+			right = 100 - abs(x);
+			left = abs(y);
+		}
+		else
+		{
+			right = 100 - abs(y);
+			left = abs(x);
+		}
+	}
+	else if ((x < 0) && (y < 0))
+	{
+		if (abs(x) < abs(y))
+		{
+			right = abs(y);
+			left = 100 - abs(x);
+		}
+		else
+		{
+			right = abs(x);
+			left = 100 - abs(y);
+		}
+	}
+	else if ((x >0) && (y > 0))
+	{
+		if (abs(x) < abs(y))
+		{
+			right = 100 - abs(x);
+			left = abs(y);
+		}
+		else
+		{
+			right = 100 - abs(y);
+			left = abs(x);
+		}
+		right = - right;
+		left = - left;
+	}
+	else if ((y > 0) && (x < 0))
+	{
+		if (abs(x) < abs(y))
+		{
+			right = abs(y);
+			left = 100 - abs(x);
+		}
+		else
+		{
+			right = abs(x);
+			left = 100 - abs(y);
+		}
+		right = - right;
+		left = - left;
+	}
+	temp.left = left;
+	temp.right = right;
+	return temp;
+}

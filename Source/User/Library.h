@@ -9,6 +9,9 @@ extern "C" {
 #include "stm32f10x_gpio.h"
 #include "stm32f10x_usart.h"
 #include "stm32f10x_nvic.h"
+#include "stm32f10x_tim.h"
+#include "Motor_Driver.h"
+#include "math.h"
 	
 /* Scheduler include files. */
 #include <stdlib.h>
@@ -30,8 +33,16 @@ extern "C" {
 //#define GPIOC_ON(pin) {GPIO_WriteBit(GPIOC, pin, Bit_SET);}
 //#define GPIOC_OFF(pin) {GPIO_WriteBit(GPIOC, pin, Bit_RESET);}
 
+typedef struct Motor
+{
+	int left;
+	int right;
+}motor_controller;
+
 void ledInit();
 void USART_Initial();
+void Motor_Init();
+struct Motor getLeftRight(int x, int y);
 	
 
 #ifdef __cplusplus

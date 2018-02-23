@@ -8,10 +8,13 @@
 .\library.o: .\STM32F10xFWLib\inc\stm32f10x_gpio.h
 .\library.o: .\STM32F10xFWLib\inc\stm32f10x_usart.h
 .\library.o: .\STM32F10xFWLib\inc\stm32f10x_nvic.h
+.\library.o: .\STM32F10xFWLib\inc\stm32f10x_tim.h
+.\library.o: ..\..\Source\User\Motor_Driver.h
+.\library.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\library.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\library.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\library.o: ..\..\Source\include\FreeRTOS.h
 .\library.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-.\library.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\library.o: ..\CORTEX_STM32F103_Keil\FreeRTOSConfig.h
 .\library.o: ..\..\Source\include\projdefs.h
 .\library.o: ..\..\Source\include\portable.h
